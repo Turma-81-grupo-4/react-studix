@@ -1,0 +1,12 @@
+//import { Curso } from './Curso'; 
+
+export interface Usuario {
+    id?: number;
+    nome: string;
+    usuario: string; 
+    senha: string;
+    foto?: string; 
+    funcao: string;
+    //curso?: Curso[];
+  }
+  

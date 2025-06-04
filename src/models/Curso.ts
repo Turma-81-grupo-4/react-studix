@@ -1,3 +1,12 @@
+
+export interface Usuario {
+    id: number;
+    nome: string;
+    usuario: string; 
+    senha: string;
+    foto?: string; 
+    funcao: string;
+
 export default interface Curso {
   usuario: any;
   id: number;
@@ -8,4 +17,5 @@ export default interface Curso {
   vagas: number;
   //categoria: Categoria | null;
   //usuario: Usuario | null;
+
 }

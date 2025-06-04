@@ -1,6 +1,7 @@
 import { createContext, type ReactNode, useState } from "react";
 
 import { login } from "../services/Service";
+import type { UsuarioLogin } from "../models/UsuarioLogin";
 
 interface AuthContextProps {
   usuario: UsuarioLogin;

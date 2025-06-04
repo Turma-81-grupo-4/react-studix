@@ -32,25 +32,32 @@ function Cadastro() {
   }
 
   async function cadastrarNovoUsuario(e: React.FormEvent<HTMLFormElement>) {
-      e.preventDefault();
+    e.preventDefault();
   
-      if (confirmarSenha === usuarioCadastro.senha && usuarioCadastro.senha.length >= 8) {
-          setIsLoading(true);
-          try {
-              await cadastrarUsuario(`/usuarios/cadastrar`, usuarioCadastro, setUsuarioCadastro);
-              alert('Usuário cadastrado com sucesso!');
-          } catch (error) {
-              alert('Erro ao cadastrar o usuário!');
-          }
-      } else {
-          alert('Dados do usuário inconsistentes! Verifique as informações do cadastro.');
-          alert('A senha deve ter no mínimo 8 caracteres!');
-          setUsuarioCadastro({ ...usuarioCadastro, senha: '' });
-          setConfirmarSenha('');
+    if (confirmarSenha === usuarioCadastro.senha && usuarioCadastro.senha.length >= 8) {
+      setIsLoading(true);
+  
+      const { nome, usuario, senha, foto, funcao } = usuarioCadastro;
+  
+      console.log("Dados enviados:", { nome, usuario, senha, foto, funcao });
+  
+      try {
+        await cadastrarUsuario('/usuarios/cadastrar', { nome, usuario, senha, foto, funcao }, setUsuarioCadastro);
+        alert('Usuário cadastrado com sucesso!');
+        navigate('/login');
+      } catch (error) {
+        console.error('Erro ao cadastrar:', error);
+        alert('Erro ao cadastrar o usuário!');
+      } finally {
+        setIsLoading(false);
       }
-  
-      setIsLoading(false);
+    } else {
+      alert('Senha inválida ou diferente da confirmação.');
+      setUsuarioCadastro({ ...usuarioCadastro, senha: '' });
+      setConfirmarSenha('');
+    }
   }
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1a40] to-[#1A5566] p-4">

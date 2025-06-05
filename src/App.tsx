@@ -11,6 +11,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login.tsx";
 import Cadastro from "./pages/cadastro/Cadastro.tsx";
 import { AuthProvider } from "./contexts/AuthContext";
+import Sobre from "./pages/sobre/Sobre.tsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
               <Route path="/cadastrarcurso" element={<FormCurso />} />
               <Route path="/editarcurso/:id" element={<FormCurso />} />
+              <Route path="/sobre" element={<Sobre />} />
             </Routes>
           </div>
           <Footer />

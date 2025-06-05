@@ -55,12 +55,15 @@ function App() {
                     />
                   </Routes>
                 </div>
+
               </div>
               <Footer />
             </div>
+
           </BrowserRouter>
         </AuthProvider>
       </AtualizaCursosProvider>
+
     </>
   );
 }

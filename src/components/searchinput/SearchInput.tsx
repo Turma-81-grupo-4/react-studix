@@ -35,7 +35,7 @@ function SearchInput() {
 
         try {
             setLoading(true);
-            navigate(`/busca/${buscar}`);
+            navigate(`/${buscar}`);
         } catch (error: any) {
             alert ('Ocorreu um erro na busca. Tente novamente.')
         } finally {
@@ -44,8 +44,7 @@ function SearchInput() {
     }
   return (
     <>
-        {podeExibirBuscar() && (
-            <div className="w-full max-w-lg mx-auto">
+        <div className="w-full max-w-lg mx-auto">
             <form onSubmit={handleBuscar} className="relative">
                 <input
                     type="text"
@@ -82,7 +81,6 @@ function SearchInput() {
                     ) : null}
                 </div>*/}
             </div>
-        )}
         
     </>
   )

@@ -11,20 +11,21 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login.tsx";
 import Cadastro from "./pages/cadastro/Cadastro.tsx";
 import { AuthProvider } from "./contexts/AuthContext";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./components/sidebar/Sidebar.tsx";
-import { ToastContainer } from 'react-toastify';
-import Perfil from './pages/perfil/Perfil.tsx';
-
+import { ToastContainer } from "react-toastify";
+import Perfil from "./pages/perfil/Perfil.tsx";
 import Sobre from "./pages/sobre/Sobre.tsx";
 import ListaCategoria from "./components/categoria/listacategoria/ListaCategotria.tsx";
+import DeletarCategoria from "./components/categoria/deletarcategoria/DeletarCategoria.tsx";
+import FormCategoria from "./components/categoria/formcategoria/FormCategoria.tsx";
 import { AtualizaCursosProvider } from "./contexts/AtualizaCursosContext.tsx";
+
 
 
 function App() {
   return (
     <>
-
       <AtualizaCursosProvider>
         <AuthProvider>
           <BrowserRouter>
@@ -42,6 +43,15 @@ function App() {
                     <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
                     <Route path="/cadastrarcurso" element={<FormCurso />} />
                     <Route path="/editarcurso/:id" element={<FormCurso />} />
+                                      <Route path="/categoria" element={<ListaCategoria />} />
+                  <Route
+                    path="/deletarcategoria/:id"
+                    element={<DeletarCategoria />}
+                  />
+                  <Route
+                    path="/editarcategoria/:id"
+                    element={<FormCategoria />}
+                  />
                   </Routes>
                 </div>
               <Footer />

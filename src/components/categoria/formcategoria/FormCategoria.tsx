@@ -20,7 +20,7 @@ function FormCategoria() {
 
   async function buscarCategorias() {
     try {
-      await buscar("/categorias", setLista, {
+      await buscar("/categoria", setLista, {
         headers: { Authorization: token },
       });
     } catch (error: any) {
@@ -117,7 +117,9 @@ function FormCategoria() {
 
         <form onSubmit={gerarNovaCategoria}>
           <div className="flex flex-col gap-2 text-black text-center">
-            <label htmlFor="descricao" className="text-bold ">Descricao da Categoria</label>
+            <label htmlFor="descricao" className="text-bold ">
+              Descricao da Categoria
+            </label>
             <input
               type="text"
               placeholder="Escreva aqui seua categoria"
@@ -129,7 +131,10 @@ function FormCategoria() {
             />
           </div>
 
-          <button  type="submit" className=" bg-blue-300 border border-blue-500 hover:bg-blue-400 hover:border-blue-700 hover:text-white">
+          <button
+            type="submit"
+            className=" bg-blue-300 border border-blue-500 hover:bg-blue-400 hover:border-blue-700 hover:text-white"
+          >
             {isLoading ? (
               <RotatingLines
                 strokeColor="white"
@@ -142,7 +147,6 @@ function FormCategoria() {
               <span>{id === undefined ? "Cadastrar" : "Atualizar"}</span>
             )}
           </button>
-
         </form>
       </div>
       {id === undefined ? (

@@ -3,15 +3,13 @@ import type { UsuarioLogin } from "../models/UsuarioLogin";
 import { login } from "../services/Service";
 import { ToastAlerta } from "../utils/ToastAlert";
 
-
 interface AuthContextProps {
   usuario: UsuarioLogin;
-  setUsuario: React.Dispatch<React.SetStateAction<UsuarioLogin>>; 
+  setUsuario: React.Dispatch<React.SetStateAction<UsuarioLogin>>;
   handleLogout(): void;
   handleLogin(usuario: UsuarioLogin): Promise<void>;
   isLoading: boolean;
 }
-
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -23,12 +21,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   /* const [usuario, setUsuario] = useState<UsuarioLogin>({} as UsuarioLogin); */
 
   const [usuario, setUsuario] = useState<UsuarioLogin>({
-    id: 0, 
-    nome: "", 
-    usuario: "", 
-    senha: "", 
+    id: 0,
+    nome: "",
+    usuario: "",
+    senha: "",
     foto: "",
-    token: "", 
+    token: "",
     funcao: "",
     data: new Date().toISOString(),
   });
@@ -39,9 +37,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsLoading(true);
     try {
       await login(`/usuarios/logar`, usuarioLogin, setUsuario);
-      ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso")
+      ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso");
     } catch (error) {
-      ToastAlerta("Os dados do Usuário estão inconsistentes!", "erro")
+      ToastAlerta("Os dados do Usuário estão inconsistentes!", "erro");
     }
     setIsLoading(false);
   }
@@ -67,8 +65,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     </AuthContext.Provider>
   );
 
+
 function LocalToastAlerta(arg0: string, arg1: string) {
   throw new Error("Function not implemented.");
 }
 
 }
+
+  function ToastAlerta(arg0: string, arg1: string) {
+    throw new Error("Function not implemented.");
+  }
+}
+

@@ -11,41 +11,59 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login.tsx";
 import Cadastro from "./pages/cadastro/Cadastro.tsx";
 import { AuthProvider } from "./contexts/AuthContext";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./components/sidebar/Sidebar.tsx";
-import { ToastContainer } from 'react-toastify';
-import Perfil from './pages/perfil/Perfil.tsx';
-
+import { ToastContainer } from "react-toastify";
+import Perfil from "./pages/perfil/Perfil.tsx";
 import Sobre from "./pages/sobre/Sobre.tsx";
 import ListaCategoria from "./components/categoria/listacategoria/ListaCategotria.tsx";
-
+import DeletarCategoria from "./components/categoria/deletarcategoria/DeletarCategoria.tsx";
+import FormCategoria from "./components/categoria/formcategoria/FormCategoria.tsx";
+import { AtualizaCursosProvider } from "./contexts/AtualizaCursosContext.tsx";
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <div className="flex flex-grow"> 
-              <Sidebar />
-              <div className="flex-grow bg-[#1A5566]">
-                <Routes>
-                  <Route path="/home" element={<Home />} />   
-                  <Route path="/cadastro" element={<Cadastro />} />  
-                  <Route path="/login" element={<Login />} /> 
-                  <Route path="/perfil" element={<Perfil />} /> 
-                  <Route path="/cursos" element={<ListaCursos />} />
-                  <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
-                  <Route path="/cadastrarcurso" element={<FormCurso />} />
-                  <Route path="/editarcurso/:id" element={<FormCurso />} />
-                </Routes>
+      <AtualizaCursosProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <div className="flex flex-grow">
+                <Sidebar />
+                <div className="flex-grow bg-white">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/cadastro" element={<Cadastro />} />
+                    <Route path="/cursos" element={<ListaCursos />} />
+                    <Route
+                      path="/deletarcurso/:id"
+                      element={<DeletarCurso />}
+                    />
+                    <Route path="/cadastrarcurso" element={<FormCurso />} />
+                    <Route path="/editarcurso/:id" element={<FormCurso />} />
+                    <Route path="/categoria" element={<ListaCategoria />} />
+                    <Route
+                      path="/deletarcategoria/:id"
+                      element={<DeletarCategoria />}
+                    />
+                    <Route
+                      path="/editarcategoria/:id"
+                      element={<FormCategoria />}
+                    />
+                  </Routes>
+                </div>
+
               </div>
+              <Footer />
             </div>
-            <Footer /> 
-          </div>
-        </BrowserRouter>
-      </AuthProvider>
+
+          </BrowserRouter>
+        </AuthProvider>
+      </AtualizaCursosProvider>
+
     </>
   );
 }

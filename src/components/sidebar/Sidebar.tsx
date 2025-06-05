@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom"
-import logo from '../../assets/img/logo/logo studix SF.png'
+import ModalCurso from "../cursos/modalcurso/ModalCurso";
+>>>>>>> 1bc0f41271780e5791d1215890d74557dcf95793
 
 
 function Sidebar() {
@@ -80,6 +81,7 @@ function Sidebar() {
             </details>
           </li>
     
+<<<<<<< HEAD
           <li>
             <a
               href="#"
@@ -87,6 +89,10 @@ function Sidebar() {
             >
               Cursos
             </a>
+=======
+          <li> 
+              <ModalCurso />  
+>>>>>>> 1bc0f41271780e5791d1215890d74557dcf95793
           </li>
     
           <li>
@@ -142,8 +148,8 @@ function Sidebar() {
     
                 <li>
                   <a
-                    href="#"
-                    className="w-full rounded-lg px-4 py-2 [text-align:_inherit] text-sm text-white hover:text-[#60B657] font-medium cursor-pointer"
+                    href="/login"
+                    className="w-full rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     Logout
                   </a>

@@ -3,3 +3,23 @@
 :root {
   font-family: "Montserrat", sans-serif;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Mais fino */
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Cor de fundo da trilha mais suave */
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c0c0c0; /* Cor do polegar mais suave */
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0; /* Cor do polegar no hover */
+}
+/* Para Firefox (opcional, menos customizável) */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #c0c0c0 #f0f0f0;
+}

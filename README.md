@@ -1,54 +1,101 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Logo Studix](https://github.com/Turma-81-grupo-4/react-studix/blob/main/src/assets/Studix-2.png)
 
-Currently, two official plugins are available:
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"/>
+  <img src="https://img.shields.io/badge/SQL-003B57?style=for-the-badge&logo=postgresql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📜 Sobre o projeto
 
-## Expanding the ESLint configuration
+**Studix** é uma aplicação Full Stack desenvolvida para gerenciar o relacionamento entre professores, com seus cursos ofertados e alunos e suas matriculas. Ela permite a criação de Usuários tanto do tipo professor quanto aluno, o primeiro tem o poder de criar novos cursos e categorias, já os alunos podem se matricular nos cursos que ainda não iniciaram, proporcionando uma gestão eficiente e moderna para professores e alunos. 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🚀 Tecnologias utilizadas
+
+### 🔥 Backend
+- Java
+- Spring Boot
+- Spring Data JPA
+- Banco de Dados SQL
+
+### 💎 Frontend
+- React
+- TypeScript
+- Tailwind CSS
+- Axios
+- React Router Dom
+- Vite
+
+---
+
+## 🎯 Funcionalidades
+
+- ✅ Cadastro de usuários;
+- ✅ Listagem de categorias;
+- ✅ Postagem, atualização e deleção de categorias;
+- ✅ Postagem, atualização e deleção de cursos (Exclusivo para o usuario do tipo Professor);
+- ✅ Manejamento de inscrições em cursos;  
+
+---
+
+## 💻 Como rodar o projeto
+
+### 🌐 Front-end
+
+```bash
+# Clone o repositório
+git clone https://github.com/Turma-81-grupo-4/react-studix.git
+cd react-studix
+
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run dev
 ```
+###  Back-end
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+```bash
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Clone o repositório
+git clone https://github.com/Turma-81-grupo-4/Studix.git
+cd studix
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Configure o application.properties.json
+Nele, há os dados de conexão com o banco de dados MySql, altere as credencias para as suas.
+
+# Rode o projeto
+Utilizando a IDE da sua escolha, faça a execução do projeto.
 ```
+---
+
+
+## 📸 Layout
+
+Utilizando Tailwind CSS., o layout foi desenvolvido com foco em uma interface moderna, responsiva e alinhado com as maiores plataformas de ensino.
+
+
+---
+
+
+## 📚 HEXCODE - Equipe de Desenvolvimento
+**Desenvolvedores:**
+- [Beatriz Kailane](https://github.com/BeaKaylanee)
+- [Guilherme Dino](https://github.com/meDinoo)
+- [Carlos Henrique da Silva Barbosa](https://github.com/Henrykeeh)
+
+**Product Owner:**
+- [Henrique Machado](https://github.com/scottineo)
+
+**Tester:**
+- [Camille Tarine](https://github.com/CahTarine)
+  
+---
+
+

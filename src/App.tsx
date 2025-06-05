@@ -30,7 +30,7 @@ function App() {
               <Route path="/cadastrarcurso" element={<FormCurso />} />
               <Route path="/editarcurso/:id" element={<FormCurso />} />
               <Route path="/sobre" element={<Sobre />} />
-              <Route path="/categorias" element={<ListaCategoria />} />
+              <Route path="/categoria" element={<ListaCategoria />} />
             </Routes>
           </div>
           <Footer />

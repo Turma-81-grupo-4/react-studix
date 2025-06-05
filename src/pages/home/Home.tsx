@@ -21,12 +21,10 @@ function Home() {
         <section id='categorias' className="py-30 bg-[#1A5566] border-4 border-[#60B657]">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h3 className="text-3xl font-bold text-black mb-4">Em alta agora</h3>
+                    <h3 className="text-3xl font-bold text-black mb-4"></h3>
                 </div>
-                <div className="grid grid-cols-3 gap-8">
-                        <div className="flex flex-col items-center text-center p-6 border-2 border-black rounded-lg shadow-md">
-                                <h3 className="text-2xl font-bold mb-2 ">{<ListaCategoria />}</h3>
-                        </div>
+                <div >
+                        <h3 className="flex items-center text-center p-6">{<ListaCategoria />}</h3>
                 </div>
             </div>
         </section>

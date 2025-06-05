@@ -48,7 +48,7 @@ function FormCategoria() {
   useEffect(() => {
     if (token === "") {
       alert("Você precisa estar logado!");
-      navigate("/");
+      navigate("/home");
     }
   }, [token]);
 

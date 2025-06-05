@@ -39,7 +39,7 @@ function ListaCursos() {
     useEffect(() => {
         if (token === '') {
             ToastAlerta('Você precisa estar logado', 'info')
-            navigate('/');
+            navigate('/home');
         }
     }, [token])
 

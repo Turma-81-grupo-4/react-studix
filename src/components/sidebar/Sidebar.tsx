@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom"
 import ModalCurso from "../cursos/modalcurso/ModalCurso";
->>>>>>> 1bc0f41271780e5791d1215890d74557dcf95793
-
+import logo from '../../assets/img/logo/logo studix SF.png'
 
 function Sidebar() {
 
@@ -80,19 +79,9 @@ function Sidebar() {
               </ul>
             </details>
           </li>
-    
-<<<<<<< HEAD
-          <li>
-            <a
-              href="#"
-              className="block rounded-lg px-4 py-2 text-sm text-white hover:text-[#60B657] font-semibold cursor-pointer"
-            >
-              Cursos
-            </a>
-=======
+  
           <li> 
               <ModalCurso />  
->>>>>>> 1bc0f41271780e5791d1215890d74557dcf95793
           </li>
     
           <li>

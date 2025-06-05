@@ -21,7 +21,7 @@ function Perfil() {
     useEffect(() => {
         if (!usuario.token || usuario.token === "") {
             alert("Você precisa estar logado");
-            navigate("/");
+            navigate("/home");
         }
     }, [usuario.token, navigate]);
 

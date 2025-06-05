@@ -3,6 +3,9 @@ import type Curso from '../../../models/Curso';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import type { Usuario } from '../../../models/Usuario';
+import { atualizar } from '../../../services/Service'; // Importa o método de atualização
+import { useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 interface CardCursosProps {
     curso: Curso;
@@ -11,7 +14,6 @@ interface CardCursosProps {
 }
 
 function CardCursos({ curso, usuarioAtual, onParticipacaoChange }: CardCursosProps) {
-    console.log('usuarioAtual:', usuarioAtual);
     // Estado para controlar vagas e participantes localmente
     const [vagasAtual, setVagasAtual] = useState(curso.vagas);
     const [participantes, setParticipantes] = useState<Usuario[]>(curso.participantes || []);
@@ -30,34 +32,44 @@ function CardCursos({ curso, usuarioAtual, onParticipacaoChange }: CardCursosPro
     const podeGerenciar = usuarioAtual?.funcao === 'professor';
     const jaParticipa = usuarioAtual ? participantes.some(p => p.id === usuarioAtual.id) : false;
     const podeParticipar = !podeGerenciar && usuarioAtual && (disponivel || jaParticipa);
-
-    const handleParticipacao = () => {
+    const { usuario } = useContext(AuthContext);
+    const token = usuario.token;
+    // Função para persistir a alteração de vagas no backend
+    const handleParticipacao = async () => {
         if (!usuarioAtual) return;
 
-        if (jaParticipa) {
-            // Sair do curso
-            const novosParticipantes = participantes.filter(p => p.id !== usuarioAtual.id);
-            const novasVagas = vagasAtual + 1;
+        // Calcula o novo número de vagas
+        const novasVagas = jaParticipa ? vagasAtual + 1 : vagasAtual - 1;
 
-            setParticipantes(novosParticipantes);
+        // Monta o objeto para enviar ao backend (todos os campos obrigatórios)
+        const cursoParaAtualizar = {
+            ...curso,
+            vagas: novasVagas,
+            // Se o backend exigir, garanta que categoria e usuario estejam no formato correto
+            categoria: curso.categoria,
+            usuario: curso.usuario,
+            disponibilidade: novasVagas > 0, // Atualiza disponibilidade se quiser
+        };
+
+        try {
+            await atualizar('/cursos', cursoParaAtualizar, () => { }, { headers: { Authorization: token } });
             setVagasAtual(novasVagas);
 
-            // Notificar componente pai se callback existir
-            onParticipacaoChange?.(curso.id, novasVagas, novosParticipantes);
-        } else {
-            // Participar do curso
-            if (vagasAtual > 0) {
-                const novosParticipantes = [...participantes, usuarioAtual];
-                const novasVagas = vagasAtual - 1;
-
-                setParticipantes(novosParticipantes);
-                setVagasAtual(novasVagas);
-
-                // Notificar componente pai se callback existir
-                onParticipacaoChange?.(curso.id, novasVagas, novosParticipantes);
+            // Atualize participantes localmente se quiser mostrar no card
+            if (jaParticipa) {
+                setParticipantes(participantes.filter(p => p.id !== usuarioAtual.id));
+            } else {
+                setParticipantes([...participantes, usuarioAtual]);
             }
+
+            // Notifique componente pai/contexto se necessário
+            onParticipacaoChange?.(curso.id, novasVagas, participantes);
+
+        } catch (error) {
+            alert('Erro ao atualizar vagas do curso!');
         }
     };
+
     return (
         <div className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl rounded-lg p-6 flex flex-col justify-between transition-all duration-300 ease-in-out transform hover:scale-105 w-full max-w-sm min-h-[420px] border border-gray-100 dark:border-gray-700">
             {/* Header do Card */}
@@ -70,8 +82,8 @@ function CardCursos({ curso, usuarioAtual, onParticipacaoChange }: CardCursosPro
                         </span>
                     </div>
                     <div className={`px-2 py-1 rounded-full text-xs font-medium ${disponivel
-                            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                            : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
+                        ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                        : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
                         }`}>
                         {disponivel ? 'Disponível' : 'Indisponível'}
                     </div>
@@ -135,8 +147,8 @@ function CardCursos({ curso, usuarioAtual, onParticipacaoChange }: CardCursosPro
                             <button
                                 onClick={handleParticipacao}
                                 className={`w-full flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md active:transform active:scale-95 ${jaParticipa
-                                        ? 'bg-red-600 hover:bg-red-700 text-white'
-                                        : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                    ? 'bg-red-600 hover:bg-red-700 text-white'
+                                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
                                     }`}
                             >
                                 {jaParticipa ? (

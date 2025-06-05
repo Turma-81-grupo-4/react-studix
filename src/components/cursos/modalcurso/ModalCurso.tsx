@@ -2,20 +2,36 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './ModalCurso.css'
 import FormCurso from '../formcurso/FormCurso';
+import { useAtualizaCursos } from '../../../contexts/AtualizaCursosContext'; // importe o hook
 
-function ModalCurso() {
+interface ModalCursoProps {
+    onCursoCadastrado?: () => void;
+}
+
+function ModalCurso({ onCursoCadastrado }: ModalCursoProps) {
+    const { notificar } = useAtualizaCursos(); // use o contexto aqui
+
     return (
         <Popup
             trigger={
                 <button
-                    className='border rounded px-4 py-2 hover:bg-white hover:text-indigo-800'>
+                    className="cursor-pointer block rounded-lg px-4 py-2 text-sm font-bold text-cyan-600 hover:bg-gray-100 hover:text-cyan-900"
+                >
                     Cadastrar Curso
                 </button>
             }
             modal
         >
             {/* @ts-ignore */}
-            {close => <FormCurso onSuccess={close} />}
+            {close => (
+                <FormCurso
+                    onSuccess={() => {
+                        close();
+                        notificar(); // <-- ATUALIZA A LISTA GLOBALMENTE
+                        if (onCursoCadastrado) onCursoCadastrado();
+                    }}
+                />
+            )}
         </Popup>
     );
 }

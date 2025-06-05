@@ -1,19 +1,14 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import logo from '../../assets/img/logo/logo studix SF.png'
 import SearchInput from '../searchinput/SearchInput'
 
 function Navbar() {
 
-    // const token = usuario.token;
-
   return (
-   
 
-    // useEffect(() => {
-    //     if (token !== '') {
-            <header className="bg-[#1A5566] shadow-md h-24 border-b-4 border-[#60B657] ">
+        <header className="bg-[#1A5566] shadow-md h-24 border-b-4 border-[#60B657] ">
             <nav className='grid grid-cols-[auto_1fr_auto] gap-x-6 max-w-7xl mx-auto px-6 items-center'>
-                <Link to='/' className='flex-1 flex justify-start items-center cursor-pointer'>
+                <Link to='/listacursos' className='flex-1 flex justify-start items-center cursor-pointer'>
                     <img src={logo} alt="Logo Studix" className="h-20 w-20 object-cover"/>
                 </Link>
 

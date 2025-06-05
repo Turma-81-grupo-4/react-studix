@@ -25,22 +25,16 @@ function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
-
-          {/* O container principal da aplicação, que será flex-col para empilhar os elementos */}
           <div className="flex flex-col min-h-screen">
             <Navbar />
-            
-            {/* Este div será o conteúdo principal, que crescerá para preencher o espaço disponível */}
-            <div className="flex flex-grow"> {/* flex-grow aqui para que este container ocupe o máximo de altura */}
+            <div className="flex flex-grow"> 
               <Sidebar />
-              
-              {/* O conteúdo das rotas, que também crescerá horizontalmente */}
               <div className="flex-grow bg-[#1A5566]">
                 <Routes>
-                          <Route path="/" element={<Login />} />   
-        <Route path="/cadastro" element={<Cadastro />} />  
-        <Route path="/login" element={<Login />} /> 
-        <Route path="/perfil" element={<Perfil />} /> 
+                  <Route path="/home" element={<Home />} />   
+                  <Route path="/cadastro" element={<Cadastro />} />  
+                  <Route path="/login" element={<Login />} /> 
+                  <Route path="/perfil" element={<Perfil />} /> 
                   <Route path="/cursos" element={<ListaCursos />} />
                   <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
                   <Route path="/cadastrarcurso" element={<FormCurso />} />
@@ -48,8 +42,7 @@ function App() {
                 </Routes>
               </div>
             </div>
-            <Footer /> {/* O Footer agora está fora do flex-grow do conteúdo principal */}
-
+            <Footer /> 
           </div>
         </BrowserRouter>
       </AuthProvider>

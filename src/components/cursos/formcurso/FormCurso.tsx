@@ -4,9 +4,9 @@ import type Curso from '../../../models/Curso';
 import { buscar, atualizar, cadastrar } from '../../../services/Service';
 import type Categorias from '../../../models/Categorias';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { ToastAlerta } from '../../../utils/ToastAlert';
 import { RotatingLines } from 'react-loader-spinner';
 import type { Usuario } from '../../../models/Usuario';
+import { ToastAlerta } from '../../../utils/ToastAlerta';
 
 function FormCurso() {
     const navigate = useNavigate();

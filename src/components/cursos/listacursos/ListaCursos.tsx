@@ -4,7 +4,6 @@ import type Curso from '../../../models/Curso';
 import CardCursos from '../cardcursos/CardCursos';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { ToastAlerta } from '../../../utils/ToastAlert';
 
 function ListaCursos() {
     const navigate = useNavigate();

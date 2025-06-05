@@ -16,9 +16,14 @@ export const login = async (url: string, dados: object, setDados: Function) => {
 }
 
 export const buscar = async (url: string, setDados: Function, header: object) => {
-  const resposta = await api.get(url, header)
-  setDados(resposta.data)
-}
+  try {
+    const resposta = await api.get(url, header);
+    setDados(resposta.data);
+  } catch (erro) {
+    throw erro; 
+  }
+};
+
 
 export const cadastrar = async (
   url: string,

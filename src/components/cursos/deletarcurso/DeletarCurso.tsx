@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import type Curso from '../../../models/Curso'
 import { buscar, deletar } from '../../../services/Service'
 import { AuthContext } from '../../../contexts/AuthContext'
-import { ToastAlerta } from '../../../utils/ToastAlert'
+import { ToastAlerta } from '../../../utils/ToastAlerta'
 
 function DeletarCurso() {
     const navigate = useNavigate()

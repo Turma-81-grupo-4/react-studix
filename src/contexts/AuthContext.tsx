@@ -1,6 +1,7 @@
 import { createContext, type ReactNode, useState } from "react";
 import type { UsuarioLogin } from "../models/UsuarioLogin";
 import { login } from "../services/Service";
+import { ToastAlerta } from "../utils/ToastAlert";
 
 interface AuthContextProps {
   usuario: UsuarioLogin;
@@ -16,15 +17,15 @@ interface AuthProviderProps {
 export const AuthContext = createContext({} as AuthContextProps);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  //const [usuario, setUsuario] = useState<UsuarioLogin>({} as UsuarioLogin);
+  /* const [usuario, setUsuario] = useState<UsuarioLogin>({} as UsuarioLogin); */
 
   const [usuario, setUsuario] = useState<UsuarioLogin>({
-    id: 2, 
-    nome: "Nome do Usuário Fixo", // Opcional, pode ser qualquer coisa para fins de teste
-    usuario: "usuario_fixo@email.com", // Opcional
-    senha: "", // Não precisa da senha
+    id: 0, 
+    nome: "", 
+    usuario: "", 
+    senha: "", 
     foto: "",
-    token: "SEU_TOKEN_AQUI", // Opcional, mas você já está fixando no FormCurso
+    token: "", 
     funcao: "",
     data: new Date().toISOString(),
   });
@@ -62,7 +63,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
       {children}
     </AuthContext.Provider>
   );
-}
-function ToastAlerta(arg0: string, arg1: string) {
-  throw new Error("Function not implemented.");
 }

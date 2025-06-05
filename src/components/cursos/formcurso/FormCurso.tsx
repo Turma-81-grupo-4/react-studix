@@ -21,7 +21,7 @@ function FormCurso() {
 
     const { usuario, handleLogout } = useContext(AuthContext);
 
-    const token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb290QHJvb3QuY29tIiwiaWF0IjoxNzQ5MDc2ODg2LCJleHAiOjE3NDkwOTg0ODZ9.K4qiKMh_Di2yoTXIuoOPEIuXHdAyEI1uOs6UCXJcsM0";
+    const token = usuario.token;
 
     async function buscarCursoPorId(id: string) {
         try {
@@ -69,15 +69,19 @@ function FormCurso() {
     }
 
     useEffect(() => {
-        // Remova ou substitua esta linha se o token do AuthContext for o principal
-        // if (token === '') { ... }
+        if (token === '') {
+            ToastAlerta('Você precisa estar logado', 'info');
+            navigate('/');
+        }
+    }, [token])
 
-        buscarCategorias();
+    useEffect(() => {
+        buscarCategorias()
 
         if (id !== undefined) {
-            buscarCursoPorId(id);
+            buscarCursoPorId(id)
         }
-    }, [id]);
+    }, [id])
 
     useEffect(() => {
         setCurso(prevCurso => ({ // Use a função de callback para garantir o estado mais recente

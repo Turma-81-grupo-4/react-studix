@@ -5,165 +5,154 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
 
-function FormCategoria(){
-    const navigate = useNavigate();
+function FormCategoria() {
+  const navigate = useNavigate();
 
-    const [lista, setLista] = useState<Categorias[]>([])
-    const [categoria, setCategoria] = useState<Categorias>({} as Categorias);
-    const[isLoading, setIsLoading] = useState<boolean>(false);
+  const [lista, setLista] = useState<Categorias[]>([]);
+  const [categoria, setCategoria] = useState<Categorias>({} as Categorias);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const {usuario, handleLogout} = useContext(AuthContext);
-    const token = usuario.token;
-    const tipo = usuario.tipo;
+  const { usuario, handleLogout } = useContext(AuthContext);
+  const token = usuario.token;
+  const tipo = usuario.funcao;
 
+  const { id } = useParams<{ id: string }>();
 
-    const {id } = useParams<{id: string}>();
-
-    async function buscarCategorias(){
-        try{
-            await buscar('/categoria', setLista,  {
-                headers: { Authorization: token }
-            })
-        }catch(error:any){
-            if (error.toString().includes('403')) {
-                handleLogout()
-            }
-        }
+  async function buscarCategorias() {
+    try {
+      await buscar("/categorias", setLista, {
+        headers: { Authorization: token },
+      });
+    } catch (error: any) {
+      if (error.toString().includes("403")) {
+        handleLogout();
+      }
     }
-     useEffect(()=>{
-            buscarCategorias();
-        },[lista.length])
-    
+  }
+  useEffect(() => {
+    buscarCategorias();
+  }, [lista.length]);
 
-    async function buscarPorId(id: string){
-        try{
-            await buscar(`/categoria/${id}`, setCategoria, {
-                 headers: { Authorization: token }
-            })
-        }catch(error: any){
-            if(error.toString().includes('403')){
-                handleLogout();
-            }
-        }
+  async function buscarPorId(id: string) {
+    try {
+      await buscar(`/categoria/${id}`, setCategoria, {
+        headers: { Authorization: token },
+      });
+    } catch (error: any) {
+      if (error.toString().includes("403")) {
+        handleLogout();
+      }
     }
-    
+  }
 
-    useEffect(() => {
-        if (token === '') {
-            alert('Você precisa estar logado!')
-            navigate('/')
-        }
-    }, [token])
-
-
-     useEffect(()=>{
-        if(tipo !== 'professor' ){
-            alert('Voce não tem permissão para navegar nesta area')
-            navigate('/home')
-        }
-    },[tipo])
-    
-
-    useEffect(() => {
-        if (id !== undefined) {
-            buscarPorId(id)
-        }
-    }, [id])
-
-
-    function atualizarEstado(e: ChangeEvent<HTMLInputElement>){
-        setCategoria({
-            ...categoria,
-            [e.target.name] : e.target.value
-        })
+  useEffect(() => {
+    if (token === "") {
+      alert("Você precisa estar logado!");
+      navigate("/");
     }
+  }, [token]);
 
-    function retornar(){
-        navigate('/categoria')
+  useEffect(() => {
+    if (tipo !== "professor") {
+      alert("Voce não tem permissão para navegar nesta area");
+      navigate("/home");
     }
+  }, [tipo]);
 
-    async function gerarNovaCategoria(e:ChangeEvent<HTMLFormElement>) {
-        e.preventDefault();
-        setIsLoading(true);
+  useEffect(() => {
+    if (id !== undefined) {
+      buscarPorId(id);
+    }
+  }, [id]);
 
-        if(id!== undefined){
-            try{
-                await atualizar(`/categoria`, categoria, setCategoria, {
-                        headers: { 'Authorization': token }
-                    })
-                    alert('A Categoria foi atualizada!');
-                
-            }catch(error: any){
-                    if (error.toString().includes('403')) {
-                    handleLogout();
-                    } else {
-                        alert('Erro ao atualizar a categoria.');
-                    }
-                }  
-        }else{
-            try{
-                await cadastrar(`/categoria`, categoria, setCategoria, {
-                    headers: { 'Authorization': token }
-                })
-                alert('A Categoria foi cadastrada com sucesso!')
-            }catch (error:any){
-                if (error.toString().includes('403')) {
-                    handleLogout();
-                } else {
-                    alert('Erro ao cadastrar a categoria.')
-                }
-            }
+  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+    setCategoria({
+      ...categoria,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function retornar() {
+    navigate("/categoria");
+  }
+
+  async function gerarNovaCategoria(e: ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (id !== undefined) {
+      try {
+        await atualizar(`/categoria`, categoria, setCategoria, {
+          headers: { Authorization: token },
+        });
+        alert("A Categoria foi atualizada!");
+      } catch (error: any) {
+        if (error.toString().includes("403")) {
+          handleLogout();
+        } else {
+          alert("Erro ao atualizar a categoria.");
         }
-        setIsLoading(false);
-        retornar()
+      }
+    } else {
+      try {
+        await cadastrar(`/categoria`, categoria, setCategoria, {
+          headers: { Authorization: token },
+        });
+        alert("A Categoria foi cadastrada com sucesso!");
+      } catch (error: any) {
+        if (error.toString().includes("403")) {
+          handleLogout();
+        } else {
+          alert("Erro ao cadastrar a categoria.");
+        }
+      }
     }
-    return(
-        <div className="flex flex-col gap-8 ">
+    setIsLoading(false);
+    retornar();
+  }
+  return (
+    <div className="flex flex-col gap-8 ">
+      <div className="w-ful h-100 bg-blue-800">
+        <h1>{id === undefined ? "Cadastrar Categoria" : "Editar Categoria"}</h1>
 
-            <div className="w-ful h-100 bg-blue-800">
-            <h1>
-                {id === undefined ? 'Cadastrar Categoria' : 'Editar Categoria'}
-            </h1>
-
-            <form onSubmit={gerarNovaCategoria}>
-                <div>
-                    <label htmlFor="descricao">Descricao da Categoria</label>
-                    <input
-                    type="text"
-                    placeholder="Escreva aqui seua categoria"
-                    name='descricao'
-                    value={categoria.descricao}
-                    onChange={(e:ChangeEvent<HTMLInputElement>)=> atualizarEstado(e)}/>
-                </div>
-                <button 
-                className="rounded " type="submit">
-                    {isLoading? 
-                        <RotatingLines
-                        strokeColor="white"
-                        strokeWidth="2"
-                        animationDuration="0.75"
-                        width="24"
-                        visible={true}/>:
-                        <span>{id === undefined ? 'Cadastrar': 'Atualizar'}</span>
-                    }
-                </button>
-            </form>
-
-            </div>
-            {
-                id === undefined ? 
-                <div className="flex flex-col gap-2 text-start">
-                    {lista.map((lista) => (
-                            <label key={lista.id}>{lista.descricao};</label>
-                        ))}
-                </div> :
-                <></>
-            }
-                    
-
-
+        <form onSubmit={gerarNovaCategoria}>
+          <div>
+            <label htmlFor="descricao">Descricao da Categoria</label>
+            <input
+              type="text"
+              placeholder="Escreva aqui seua categoria"
+              name="descricao"
+              value={categoria.categoria}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
+            />
+          </div>
+          <button className="rounded " type="submit">
+            {isLoading ? (
+              <RotatingLines
+                strokeColor="white"
+                strokeWidth="2"
+                animationDuration="0.75"
+                width="24"
+                visible={true}
+              />
+            ) : (
+              <span>{id === undefined ? "Cadastrar" : "Atualizar"}</span>
+            )}
+          </button>
+        </form>
+      </div>
+      {id === undefined ? (
+        <div className="flex flex-col gap-2 text-start">
+          {lista.map((lista) => (
+            <label key={lista.id}>{lista.categoria};</label>
+          ))}
         </div>
-    )
-
+      ) : (
+        <></>
+      )}
+    </div>
+  );
 }
 export default FormCategoria;

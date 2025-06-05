@@ -1,14 +1,28 @@
-import { FileEditIcon, TrashIcon } from 'lucide-react';
+import { BookOpen, Calendar, FileEditIcon, TrashIcon, User, UserMinus, UserPlus, Users } from 'lucide-react';
 import type Curso from '../../../models/Curso';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import type { Usuario } from '../../../models/Usuario';
 
+const usuarioTeste = {
+    id: 1,
+    nome: "Usuário Teste",
+    usuario: "usuario.teste",
+    senha: "12345678",
+    foto: "https://via.placeholder.com/150",
+    funcao: "professor", // Pode ser 'aluno' ou 'professor'
+}
 interface CardCursosProps {
     curso: Curso;
+    usuarioAtual?: Usuario; // Usuário atual, pode ser aluno ou professor
+    onParticipacaoChange?: (cursoId: number, novasVagas: number, participantes: Usuario[]) => void; // Callback para atualizar no componente pai
 }
 
+function CardCursos({ curso, usuarioAtual = usuarioTeste, onParticipacaoChange }: CardCursosProps) {
+    // Estado para controlar vagas e participantes localmente
+    const [vagasAtual, setVagasAtual] = useState(curso.vagas);
+    const [participantes, setParticipantes] = useState<Usuario[]>(curso.participantes || []);
 
-function CardCursos({ curso }: CardCursosProps) {
-    const usuarioSimulado = curso.usuario ?? { funcao: 'professor' };
     const formatDate = (dateString: Date | string) => {
         try {
             return new Date(dateString).toLocaleDateString('pt-BR', {
@@ -20,99 +34,163 @@ function CardCursos({ curso }: CardCursosProps) {
             return "Data inválida";
         }
     };
+    const disponivel = curso.disponibilidade && vagasAtual > 0;
+    const podeGerenciar = usuarioAtual?.funcao === 'professor';
+    const jaParticipa = usuarioAtual ? participantes.some(p => p.id === usuarioAtual.id) : false;
+    const podeParticipar = !podeGerenciar && usuarioAtual && (disponivel || jaParticipa);
 
+    const handleParticipacao = () => {
+        if (!usuarioAtual) return;
 
-    const podeGerenciar = usuarioSimulado.funcao === 'professor';
+        if (jaParticipa) {
+            // Sair do curso
+            const novosParticipantes = participantes.filter(p => p.id !== usuarioAtual.id);
+            const novasVagas = vagasAtual + 1;
 
+            setParticipantes(novosParticipantes);
+            setVagasAtual(novasVagas);
+
+            // Notificar componente pai se callback existir
+            onParticipacaoChange?.(curso.id, novasVagas, novosParticipantes);
+        } else {
+            // Participar do curso
+            if (vagasAtual > 0) {
+                const novosParticipantes = [...participantes, usuarioAtual];
+                const novasVagas = vagasAtual - 1;
+
+                setParticipantes(novosParticipantes);
+                setVagasAtual(novasVagas);
+
+                // Notificar componente pai se callback existir
+                onParticipacaoChange?.(curso.id, novasVagas, novosParticipantes);
+            }
+        }
+    };
     return (
-        <div className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl rounded-lg m-4 p-6 flex flex-col justify-between transition-all duration-300 ease-in-out transform hover:scale-105 w-full max-w-sm min-h-[320px]">
-            <div>
-                <h3 className="text-2xl font-semibold text-emerald-700 dark:text-emerald-500 mb-2">{curso.titulo}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">ID: {curso.id}</p>
-                <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 h-20 overflow-y-auto">
-                    {/* Adiciona scroll se a descrição for muito longa */}
-                    {curso.descricao || "Nenhuma descrição fornecida."}
-                </p>
-
-                <div className="space-y-2 text-sm mb-4">
-                    <div className="flex items-center text-gray-600 dark:text-gray-400">
-                        {/* <FiCalendar className="mr-2 text-emerald-600" /> */}
-                        <span>Data: {formatDate(curso.data)}</span>
+        <div className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl rounded-lg p-6 flex flex-col justify-between transition-all duration-300 ease-in-out transform hover:scale-105 w-full max-w-sm min-h-[420px] border border-gray-100 dark:border-gray-700">
+            {/* Header do Card */}
+            <div className="flex-1">
+                <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                        <BookOpen className="text-emerald-600 dark:text-emerald-400" size={20} />
+                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                            ID: {curso.id}
+                        </span>
                     </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-400">
-                        {/* <FiUsers className="mr-2 text-emerald-600" /> */}
-                        <span>Vagas: {curso.vagas}</span>
-                    </div>
-                    <div className="flex items-center">
-                        {curso.disponibilidade ? (
-                            <>
-                                {/* <FiCheckCircle className="mr-2 text-green-500" /> */}
-                                <span className="text-green-600 dark:text-green-400 font-medium">Disponível</span>
-                            </>
-                        ) : (
-                            <>
-                                {/* <FiXCircle className="mr-2 text-red-500" /> */}
-                                <span className="text-red-600 dark:text-red-400 font-medium">Indisponível</span>
-                            </>
-                        )}
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${disponivel
+                            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                            : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
+                        }`}>
+                        {disponivel ? 'Disponível' : 'Indisponível'}
                     </div>
                 </div>
 
-                {/* Informações de Categoria e Usuário (Professor) */}
-                {/*
-        {curso.categoria && (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Categoria: {curso.categoria.nome}
-          </p>
-        )}
-        {curso.usuario && ( // Lembre-se que curso.usuario é o criador/professor do curso
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Professor: {curso.usuario.nome}
-          </p>
-        )}
-        */}
+                {/* Título do Curso */}
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 leading-tight">
+                    {curso.titulo}
+                </h3>
+
+                {/* Descrição */}
+                <div className="mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed h-16 overflow-y-auto">
+                        {curso.descricao || "Nenhuma descrição fornecida."}
+                    </p>
+                </div>
+
+                {/* Informações do Curso */}
+                <div className="space-y-3 mb-4">
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
+                        <Calendar size={16} className="mr-3 text-emerald-600 dark:text-emerald-400" />
+                        <span className="text-sm font-medium">Data: {formatDate(curso.data)}</span>
+                    </div>
+
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
+                        <Users size={16} className="mr-3 text-emerald-600 dark:text-emerald-400" />
+                        <span className="text-sm font-medium">
+                            Vagas: {vagasAtual}
+                            {participantes.length > 0 && (
+                                <span className="ml-2 text-xs text-gray-500">
+                                    ({participantes.length} {participantes.length === 1 ? 'inscrito' : 'inscritos'})
+                                </span>
+                            )}
+                        </span>
+                    </div>
+
+                    {curso.categoria && (
+                        <div className="flex items-center text-gray-600 dark:text-gray-400">
+                            <div className="w-4 h-4 mr-3 bg-emerald-600 dark:bg-emerald-400 rounded-full flex items-center justify-center">
+                                <div className="w-2 h-2 bg-white rounded-full"></div>
+                            </div>
+                            <span className="text-sm font-medium">Categoria: {curso.categoria.categoria}</span>
+                        </div>
+                    )}
+
+                    {curso.usuario && (
+                        <div className="flex items-center text-gray-600 dark:text-gray-400">
+                            <User size={16} className="mr-3 text-emerald-600 dark:text-emerald-400" />
+                            <span className="text-sm font-medium">Professor: {curso.usuario.nome}</span>
+                        </div>
+                    )}
+                </div>
             </div>
 
-            {/* Botões de Ação - Visíveis apenas para professores */}
+            {/* Botões de Ação */}
+            <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+                {/* Botão Participar/Sair - Visível para alunos */}
+                {!podeGerenciar && usuarioAtual && (
+                    <div className="mb-3">
+                        {podeParticipar ? (
+                            <button
+                                onClick={handleParticipacao}
+                                className={`w-full flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md active:transform active:scale-95 ${jaParticipa
+                                        ? 'bg-red-600 hover:bg-red-700 text-white'
+                                        : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                    }`}
+                            >
+                                {jaParticipa ? (
+                                    <>
+                                        <UserMinus size={16} className="mr-2" />
+                                        Sair do Curso
+                                    </>
+                                ) : (
+                                    <>
+                                        <UserPlus size={16} className="mr-2" />
+                                        Participar
+                                    </>
+                                )}
+                            </button>
+                        ) : (
+                            <button
+                                disabled
+                                className="w-full flex items-center justify-center px-4 py-2 bg-gray-400 text-white text-sm font-medium rounded-lg cursor-not-allowed opacity-60"
+                            >
+                                {!curso.disponibilidade ? 'Curso Indisponível' : 'Sem Vagas'}
+                            </button>
+                        )}
+                    </div>
+                )}
 
-            {podeGerenciar && (
-                <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-2">
-                    <Link
-                        to={`/editarcurso/${curso.id}`}
-                        className="
-              w-full sm:w-auto
-              text-center
-              bg-blue-500 hover:bg-blue-600
-              text-white
-              px-4 py-2 rounded-md
-              transition-colors duration-300
-              cursor-pointer
-              text-sm font-medium
-              flex items-center justify-center
-            "
-                    >
-                        {<FileEditIcon className="mr-2" />}
-                        Editar
-                    </Link>
-                    <Link
-                        to={`/deletarcurso/${curso.id}`}
-                        className="
-              w-full sm:w-auto
-              text-center
-              bg-red-500 hover:bg-red-600
-              text-white
-              px-4 py-2 rounded-md
-              transition-colors duration-300
-              cursor-pointer
-              text-sm font-medium
-              flex items-center justify-center
-            "
-                    >
-                        {<TrashIcon className="mr-2" />}
-                        Excluir
-                    </Link>
-                </div>
-            )}
+                {/* Botões de Gerenciamento - Visíveis apenas para professores */}
+                {podeGerenciar && (
+                    <div className="flex flex-col sm:flex-row gap-2">
+                        <Link
+                            to={`/editarcurso/${curso.id}`}
+                            className="flex-1 flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md active:transform active:scale-95"
+                        >
+                            <FileEditIcon size={16} className="mr-2" />
+                            Editar
+                        </Link>
+
+                        <Link
+                            to={`/deletarcurso/${curso.id}`}
+                            className="flex-1 flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md active:transform active:scale-95"
+                        >
+                            <TrashIcon size={16} className="mr-2" />
+                            Excluir
+                        </Link>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

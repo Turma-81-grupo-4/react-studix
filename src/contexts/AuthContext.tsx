@@ -16,7 +16,18 @@ interface AuthProviderProps {
 export const AuthContext = createContext({} as AuthContextProps);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [usuario, setUsuario] = useState<UsuarioLogin>({} as UsuarioLogin);
+  //const [usuario, setUsuario] = useState<UsuarioLogin>({} as UsuarioLogin);
+
+  const [usuario, setUsuario] = useState<UsuarioLogin>({
+    id: 2, 
+    nome: "Nome do Usuário Fixo", // Opcional, pode ser qualquer coisa para fins de teste
+    usuario: "usuario_fixo@email.com", // Opcional
+    senha: "", // Não precisa da senha
+    foto: "",
+    token: "SEU_TOKEN_AQUI", // Opcional, mas você já está fixando no FormCurso
+    funcao: "",
+    data: new Date().toISOString(),
+  });
 
   const [isLoading, setIsLoading] = useState(false);
 

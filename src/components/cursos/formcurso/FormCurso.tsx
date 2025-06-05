@@ -8,7 +8,11 @@ import { ToastAlerta } from '../../../utils/ToastAlert';
 import { RotatingLines } from 'react-loader-spinner';
 import type { Usuario } from '../../../models/Usuario';
 
-function FormCurso() {
+interface FormCursoProps {
+    onSuccess?: () => void;
+}
+
+function FormCurso({ onSuccess }: FormCursoProps) {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -84,7 +88,7 @@ function FormCurso() {
     }, [id])
 
     useEffect(() => {
-        setCurso(prevCurso => ({ // Use a função de callback para garantir o estado mais recente
+        setCurso(prevCurso => ({
             ...prevCurso,
             categoria: categoria,
         }));
@@ -94,8 +98,6 @@ function FormCurso() {
         setCurso({
             ...curso,
             [e.target.name]: e.target.value,
-            // Remova a atribuição direta de categoria e usuario aqui
-            // pois ela será tratada antes do envio no gerarNovoCurso
         });
     }
 
@@ -107,14 +109,12 @@ function FormCurso() {
         e.preventDefault();
         setIsLoading(true);
 
-        // *** Construa o objeto curso com apenas os IDs para relacionamentos ***
         const cursoParaEnviar = {
             ...curso,
             categoria: categoria.id !== 0 ? { id: categoria.id } : null,
             usuario: usuario.id !== 0 ? { id: usuario.id } : null,
         };
 
-        // Verificações adicionais
         if (cursoParaEnviar.categoria === null || cursoParaEnviar.usuario === null) {
             ToastAlerta('A categoria e o usuário do curso são obrigatórios.', 'erro');
             setIsLoading(false);
@@ -123,12 +123,13 @@ function FormCurso() {
 
         if (id !== undefined) {
             try {
-                await atualizar(`/cursos`, cursoParaEnviar, setCurso, { // Envie cursoParaEnviar
+                await atualizar(`/cursos`, cursoParaEnviar, setCurso, {
                     headers: {
                         Authorization: token,
                     },
                 });
                 ToastAlerta('Curso atualizado com sucesso', 'sucesso');
+                if (onSuccess) onSuccess(); // Chama o onSuccess após sucesso
             } catch (error: any) {
                 if (error.toString().includes('403')) {
                     ToastAlerta('O token expirou, faça login novamente.', 'info');
@@ -139,12 +140,13 @@ function FormCurso() {
             }
         } else {
             try {
-                await cadastrar(`/cursos`, cursoParaEnviar, setCurso, { // Envie cursoParaEnviar
+                await cadastrar(`/cursos`, cursoParaEnviar, setCurso, {
                     headers: {
                         Authorization: token,
                     },
                 });
                 ToastAlerta('Curso cadastrado com sucesso', 'sucesso');
+                if (onSuccess) onSuccess(); // Chama o onSuccess após sucesso
             } catch (error: any) {
                 if (error.toString().includes('403')) {
                     ToastAlerta('O token expirou, faça login novamente.', 'info');
@@ -164,7 +166,7 @@ function FormCurso() {
     return (
         <div className="container flex flex-col mx-auto items-center">
             <h1 className="text-4xl text-center my-8">
-                {id !== undefined ? 'Editar Postagem' : 'Cadastrar Postagem'}
+                {id !== undefined ? 'Editar Curso' : 'Cadastrar Curso'}
             </h1>
 
             <form className="flex flex-col w-1/2 gap-4" onSubmit={gerarNovoCurso}>
@@ -239,7 +241,7 @@ function FormCurso() {
                 <button
                     type='submit'
                     className='rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800 text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
-                    disabled={carregandoCategoria || isLoading} // Adicione isLoading ao disabled
+                    disabled={carregandoCategoria || isLoading}
                 >
                     {isLoading ?
                         <RotatingLines

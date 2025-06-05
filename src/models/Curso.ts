@@ -1,21 +1,14 @@
-
-export interface Usuario {
-    id: number;
-    nome: string;
-    usuario: string; 
-    senha: string;
-    foto?: string; 
-    funcao: string;
+import type Categorias from "./Categorias";
+import type { Usuario } from "./Usuario";
 
 export default interface Curso {
-  usuario: any;
   id: number;
   titulo: string;
   descricao: string;
-  data: Date;
+  data: string | Date;
   disponibilidade: boolean;
   vagas: number;
-  //categoria: Categoria | null;
-  //usuario: Usuario | null;
-
+  categoria: Categorias | null;
+  usuario: Usuario | null;
+  participantes?: Usuario[];
 }

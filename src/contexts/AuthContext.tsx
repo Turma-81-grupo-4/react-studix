@@ -1,8 +1,6 @@
 import { createContext, type ReactNode, useState } from "react";
-import type { UsuarioLogin } from "../models/UsuarioLogin"; 
-
-import { login } from "../services/Service";
 import type { UsuarioLogin } from "../models/UsuarioLogin";
+import { login } from "../services/Service";
 
 interface AuthContextProps {
   usuario: UsuarioLogin;
@@ -57,4 +55,3 @@ export function AuthProvider({ children }: AuthProviderProps) {
 function ToastAlerta(arg0: string, arg1: string) {
   throw new Error("Function not implemented.");
 }
-

@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "tailwindcss/preflight";
-@tailwind utilities;
 
 :root {
   font-family: "Montserrat", sans-serif;
@@ -22,6 +20,6 @@
 }
 /* Para Firefox (opcional, menos customizável) */
 .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #c0c0c0 #f0f0f0;
+  scrollbar-width: thin;
+  scrollbar-color: #c0c0c0 #f0f0f0;
 }

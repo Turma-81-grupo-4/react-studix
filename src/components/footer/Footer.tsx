@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import logo from '../../assets/img/logo/logo studix SF.png'
 
 function Footer() {
@@ -12,7 +13,7 @@ function Footer() {
                 <div className="flex flex-col gap-2">
                     <div className="font-bold text-lg">Sobre</div>
                     <ul className="space-y-1 text-sm">
-                        <li className="hover:text-[#60B657] cursor-pointer">Quem somos</li>
+                        <Link to='/sobre' className="hover:text-[#60B657] cursor-pointer">Quem somos</Link>
                         <li className="hover:text-[#60B657] cursor-pointer">Fale conosco</li>
                         <li className="hover:text-[#60B657] cursor-pointer">Ajuda e suporte</li>
                     </ul>

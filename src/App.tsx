@@ -21,6 +21,8 @@ function App() {
           <div className="bg-[#1A5566] min-h-screen">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/cadastro" element={<Cadastro />} />
               <Route path="/cursos" element={<ListaCursos />} />
               <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
               <Route path="/cadastrarcurso" element={<FormCurso />} />

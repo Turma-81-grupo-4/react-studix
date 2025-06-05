@@ -1,13 +1,16 @@
 import { createContext, type ReactNode, useState } from "react";
 import type { UsuarioLogin } from "../models/UsuarioLogin";
 import { login } from "../services/Service";
+import { ToastAlerta } from "../utils/ToastAlerta";
 
 interface AuthContextProps {
   usuario: UsuarioLogin;
+  setUsuario: React.Dispatch<React.SetStateAction<UsuarioLogin>>; 
   handleLogout(): void;
   handleLogin(usuario: UsuarioLogin): Promise<void>;
   isLoading: boolean;
 }
+
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -35,9 +38,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsLoading(true);
     try {
       await login(`/usuarios/logar`, usuarioLogin, setUsuario);
-      ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso");
+      ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso")
     } catch (error) {
-      ToastAlerta("Os dados do Usuário estão inconsistentes!", "erro");
+      ToastAlerta("Os dados do Usuário estão inconsistentes!", "erro")
     }
     setIsLoading(false);
   }
@@ -57,12 +60,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ usuario, handleLogin, handleLogout, isLoading }}
+      value={{ usuario, setUsuario, handleLogin, handleLogout, isLoading }}
     >
       {children}
     </AuthContext.Provider>
   );
 }
+
 function ToastAlerta(arg0: string, arg1: string) {
   throw new Error("Function not implemented.");
 }
+

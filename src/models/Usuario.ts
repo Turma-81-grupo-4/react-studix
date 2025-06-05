@@ -1,5 +1,3 @@
-//import { Curso } from './Curso'; 
-
 export interface Usuario {
     id?: number;
     nome: string;
@@ -7,6 +5,5 @@ export interface Usuario {
     senha: string;
     foto?: string; 
     funcao: string;
-    //curso?: Curso[];
   }
   

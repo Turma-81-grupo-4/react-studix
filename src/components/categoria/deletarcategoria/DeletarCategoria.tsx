@@ -78,16 +78,16 @@ function DeletarCategoria() {
   }
 
   return (
-    <div>
-      <header>Deletar Categoria</header>
+    <div className=" flex flex-col gap-4 items-center text-center bg-blue-200 rounded-2xl shadow-lg text-black">
+      <h2 className="text-2xl ">Deletar Categoria</h2>
       <p>Tem certeza que deseja apagar a categoria </p>
-      <div>
-        <header>Categoria</header>
+      <div className=" flex flex-col gap-4  ">
+        <h3>Categoria</h3>
         <p>{categoria.categoria}</p>
-        <div>
-          <button>Não</button>
+        <div className=" flex justify-between">
+          <button className="bg-red-200 text-black border border-black flex items-center justify-center rounded-2xl">Não</button>
           <button
-            className="w-full flex items-center justify-center"
+            className="w-[50px] border  flex items-center justify-center rounded-2xl bg-green-200 border-green-200 hover:bg-white hover:text-green-200 hover:border-green-200"
             onClick={deletarCategoria}
           >
             {isLoading ? (
@@ -97,7 +97,7 @@ function DeletarCategoria() {
             )}
           </button>
         </div>
-      </div>
+      </div>  
     </div>
   );
 }

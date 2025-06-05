@@ -21,8 +21,6 @@ import DeletarCategoria from "./components/categoria/deletarcategoria/DeletarCat
 import FormCategoria from "./components/categoria/formcategoria/FormCategoria.tsx";
 import { AtualizaCursosProvider } from "./contexts/AtualizaCursosContext.tsx";
 
-
-
 function App() {
   return (
     <>
@@ -40,20 +38,24 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/cadastro" element={<Cadastro />} />
                     <Route path="/cursos" element={<ListaCursos />} />
-                    <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
+                    <Route
+                      path="/deletarcurso/:id"
+                      element={<DeletarCurso />}
+                    />
                     <Route path="/cadastrarcurso" element={<FormCurso />} />
                     <Route path="/editarcurso/:id" element={<FormCurso />} />
-                                      <Route path="/categoria" element={<ListaCategoria />} />
-                  <Route
-                    path="/deletarcategoria/:id"
-                    element={<DeletarCategoria />}
-                  />
-                  <Route
-                    path="/editarcategoria/:id"
-                    element={<FormCategoria />}
-                  />
+                    <Route path="/categoria" element={<ListaCategoria />} />
+                    <Route
+                      path="/deletarcategoria/:id"
+                      element={<DeletarCategoria />}
+                    />
+                    <Route
+                      path="/editarcategoria/:id"
+                      element={<FormCategoria />}
+                    />
                   </Routes>
                 </div>
+              </div>
               <Footer />
             </div>
           </BrowserRouter>

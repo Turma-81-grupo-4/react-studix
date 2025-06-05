@@ -35,7 +35,7 @@ function DeletarCategoria() {
   useEffect(() => {
     if (token === "") {
       alert("Voce precisa estar logado");
-      navigate("/");
+      navigate("/home");
     }
   }, [token]);
 

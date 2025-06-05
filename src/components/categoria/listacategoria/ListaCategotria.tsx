@@ -41,8 +41,18 @@ function ListaCategoria() {
   }
 
   useEffect(() => {
+
     // Este useEffect agora apenas DISPARA a busca quando o token muda.
     // Ele não mais força o redirecionamento se o token estiver vazio.
+
+    if (token === "") {
+      alert("Voce precisa estar logado");
+      navigate("/home");
+    }
+  }, [token]);
+
+  useEffect(() => {
+
     buscarCategorias();
   }, [token]); // Agora, `buscarCategorias` é chamada quando o token muda
 

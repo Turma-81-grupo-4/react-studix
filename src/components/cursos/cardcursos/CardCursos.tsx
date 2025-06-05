@@ -4,25 +4,17 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import type { Usuario } from '../../../models/Usuario';
 
-const usuarioTeste = {
-    id: 1,
-    nome: "Usuário Teste",
-    usuario: "usuario.teste",
-    senha: "12345678",
-    foto: "https://via.placeholder.com/150",
-    funcao: "professor", // Pode ser 'aluno' ou 'professor'
-}
 interface CardCursosProps {
     curso: Curso;
     usuarioAtual?: Usuario; // Usuário atual, pode ser aluno ou professor
     onParticipacaoChange?: (cursoId: number, novasVagas: number, participantes: Usuario[]) => void; // Callback para atualizar no componente pai
 }
 
-function CardCursos({ curso, usuarioAtual = usuarioTeste, onParticipacaoChange }: CardCursosProps) {
+function CardCursos({ curso, usuarioAtual, onParticipacaoChange }: CardCursosProps) {
+    console.log('usuarioAtual:', usuarioAtual);
     // Estado para controlar vagas e participantes localmente
     const [vagasAtual, setVagasAtual] = useState(curso.vagas);
     const [participantes, setParticipantes] = useState<Usuario[]>(curso.participantes || []);
-
     const formatDate = (dateString: Date | string) => {
         try {
             return new Date(dateString).toLocaleDateString('pt-BR', {

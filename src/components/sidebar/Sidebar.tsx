@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom"
+import ModalCurso from "../cursos/modalcurso/ModalCurso";
 
 
 function Sidebar() {
@@ -76,13 +77,8 @@ function Sidebar() {
             </details>
           </li>
     
-          <li>
-            <a
-              href="#"
-              className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              Billing
-            </a>
+          <li> 
+              <ModalCurso />  
           </li>
     
           <li>
@@ -138,7 +134,7 @@ function Sidebar() {
     
                 <li>
                   <a
-                    href="#"
+                    href="/login"
                     className="w-full rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     Logout

@@ -14,7 +14,7 @@ function ListaCursos() {
     const [error, setError] = useState<string | null>(null);
 
     const { usuario, handleLogout } = useContext(AuthContext);
-    const token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb290QHJvb3QuY29tIiwiaWF0IjoxNzQ5MDc2ODg2LCJleHAiOjE3NDkwOTg0ODZ9.K4qiKMh_Di2yoTXIuoOPEIuXHdAyEI1uOs6UCXJcsM0";
+    const token = usuario.token;
 
     async function buscarCursos() {
         try {
@@ -36,12 +36,12 @@ function ListaCursos() {
         }
     }
 
-    /*     useEffect(() => {
-            if (token === '') {
-                ToastAlerta('Você precisa estar logado', 'info')
-                navigate('/');
-            }
-        }, [token]) */
+    useEffect(() => {
+        if (token === '') {
+            ToastAlerta('Você precisa estar logado', 'info')
+            navigate('/');
+        }
+    }, [token])
 
     useEffect(() => {
         buscarCursos();
@@ -182,7 +182,7 @@ function ListaCursos() {
                                     animation: 'slideUp 0.6s ease-out forwards'
                                 }}
                             >
-                                <CardCursos curso={curso} />
+                                <CardCursos curso={curso} usuarioAtual={usuario} />
                             </div>
                         ))
                     ) : (

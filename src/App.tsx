@@ -11,9 +11,10 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login.tsx";
 import Cadastro from "./pages/cadastro/Cadastro.tsx";
 import { AuthProvider } from "./contexts/AuthContext";
-
+import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from "./components/sidebar/Sidebar.tsx";
-
+import { ToastContainer } from 'react-toastify';
+import Perfil from './pages/perfil/Perfil.tsx';
 
 import Sobre from "./pages/sobre/Sobre.tsx";
 import ListaCategoria from "./components/categoria/listacategoria/ListaCategotria.tsx";
@@ -36,9 +37,10 @@ function App() {
               {/* O conteúdo das rotas, que também crescerá horizontalmente */}
               <div className="flex-grow bg-[#1A5566]">
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/cadastro" element={<Cadastro />} />
+                          <Route path="/" element={<Login />} />   
+        <Route path="/cadastro" element={<Cadastro />} />  
+        <Route path="/login" element={<Login />} /> 
+        <Route path="/perfil" element={<Perfil />} /> 
                   <Route path="/cursos" element={<ListaCursos />} />
                   <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
                   <Route path="/cadastrarcurso" element={<FormCurso />} />

@@ -111,13 +111,13 @@ function FormCategoria() {
     retornar();
   }
   return (
-    <div className="flex flex-col gap-8 ">
-      <div className="w-ful h-100 bg-blue-800">
+    <div className="flex flex-col gap-8 bg-gray-200 text-center ">
+      <div className="w-full h-[300] bg-blue-800">
         <h1>{id === undefined ? "Cadastrar Categoria" : "Editar Categoria"}</h1>
 
         <form onSubmit={gerarNovaCategoria}>
-          <div>
-            <label htmlFor="descricao">Descricao da Categoria</label>
+          <div className="flex flex-col gap-2 text-black text-center">
+            <label htmlFor="descricao" className="text-bold ">Descricao da Categoria</label>
             <input
               type="text"
               placeholder="Escreva aqui seua categoria"
@@ -128,7 +128,8 @@ function FormCategoria() {
               }
             />
           </div>
-          <button className="rounded " type="submit">
+
+          <button  type="submit" className=" bg-blue-300 border border-blue-500 hover:bg-blue-400 hover:border-blue-700 hover:text-white">
             {isLoading ? (
               <RotatingLines
                 strokeColor="white"
@@ -141,10 +142,11 @@ function FormCategoria() {
               <span>{id === undefined ? "Cadastrar" : "Atualizar"}</span>
             )}
           </button>
+
         </form>
       </div>
       {id === undefined ? (
-        <div className="flex flex-col gap-2 text-start">
+        <div className="flex flex-col gap-2 text-start text-gray-500  hover:text-gray-700 ">
           {lista.map((lista) => (
             <label key={lista.id}>{lista.categoria};</label>
           ))}

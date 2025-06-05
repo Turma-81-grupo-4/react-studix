@@ -1,3 +1,4 @@
+
 import type Categorias from "./Categorias";
 import type { Usuario } from "./Usuario";
 
@@ -12,3 +13,4 @@ export default interface Curso {
   usuario: Usuario | null;
   participantes?: Usuario[];
 }
+

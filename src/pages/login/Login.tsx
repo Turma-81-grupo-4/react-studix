@@ -18,6 +18,7 @@ function Login() {
   useEffect(() => {
     if (usuario && usuario.token && usuario.token !== '') {
       navigate('/cursos');
+
     }
   }, [usuario, navigate]);
 

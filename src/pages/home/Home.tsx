@@ -25,7 +25,7 @@ function Home() {
                 </div>
                 <div className="grid grid-cols-3 gap-8">
                         <div className="flex flex-col items-center text-center p-6 border-2 border-black rounded-lg shadow-md">
-                                <h3 className="text-2xl font-bold mb-2 "><ListaCategoria /></h3>
+                                <h3 className="text-2xl font-bold mb-2 ">{<ListaCategoria />}</h3>
                         </div>
                 </div>
             </div>

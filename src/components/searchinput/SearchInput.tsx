@@ -30,6 +30,7 @@ function SearchInput() {
 
         if (buscar.trim() === '') {
             alert ('Informe o termo que deseja pesquisar!')
+            return;
         } 
 
         try {

@@ -11,7 +11,7 @@ function Navbar() {
     <header className="bg-[#1A5566] shadow-md h-24 border-b-4 border-[#60B657] ">
       <nav className="grid grid-cols-[auto_1fr_auto] gap-x-6 max-w-7xl mx-auto px-6 items-center">
         <Link
-          to="/"
+          to="/home"
           className="flex-1 flex justify-start items-center cursor-pointer"
         >
           <img
@@ -43,6 +43,12 @@ function Navbar() {
             className="text-white hover:text-[#60B657] font-semibold cursor-pointer"
           >
             Categorias
+          </Link>
+          <Link
+            to="/cursos"
+            className="text-white hover:text-[#60B657] font-semibold cursor-pointer"
+          >
+            Cursos
           </Link>
         </div>
       </nav>

@@ -12,7 +12,8 @@ function Perfil() {
     const [nome, setNome] = useState(usuario.nome || "");
 
     const funcao = usuario.funcao?.toLowerCase();
-
+    const token = usuario.token;
+    
     useEffect(() => {
         setFoto(usuario.foto || "");
         setNome(usuario.nome || "");

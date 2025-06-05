@@ -35,6 +35,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
+                    <Route path="/perfil" element={<Perfil />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cadastro" element={<Cadastro />} />
                     <Route path="/cursos" element={<ListaCursos />} />
@@ -53,6 +54,7 @@ function App() {
                       path="/editarcategoria/:id"
                       element={<FormCategoria />}
                     />
+                    <Route path="/sobre" element={<Sobre/>} />
                   </Routes>
                 </div>
 

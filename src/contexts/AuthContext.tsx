@@ -64,16 +64,5 @@ export function AuthProvider({ children }: AuthProviderProps) {
       {children}
     </AuthContext.Provider>
   );
-
-
-function LocalToastAlerta(arg0: string, arg1: string) {
-  throw new Error("Function not implemented.");
-}
-
-}
-
-  function ToastAlerta(arg0: string, arg1: string) {
-    throw new Error("Function not implemented.");
-  }
 }
 

@@ -156,7 +156,7 @@ function ListaCursos() {
                                 {cursos.filter(curso => curso.disponibilidade).length} {cursos.filter(curso => curso.disponibilidade).length === 1 ? 'curso disponível' : 'cursos disponíveis'}
                                 {cursos.length > cursos.filter(curso => curso.disponibilidade).length && (
                                     <span className="text-gray-500 ml-1">
-                                        • {cursos.length - cursos.filter(curso => curso.disponibilidade).length} indisponível{cursos.length - cursos.filter(curso => curso.disponibilidade).length > 1 ? 'eis' : ''}
+                                        • {cursos.length - cursos.filter(curso => curso.disponibilidade).length} indisponível{cursos.length - cursos.filter(curso => curso.disponibilidade).length > 1 ? '(eis)' : ''}
                                     </span>
                                 )}
                             </span>

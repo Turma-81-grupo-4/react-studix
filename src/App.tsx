@@ -15,37 +15,35 @@ import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./components/sidebar/Sidebar.tsx";
 import { ToastContainer } from "react-toastify";
 import Perfil from "./pages/perfil/Perfil.tsx";
-
 import Sobre from "./pages/sobre/Sobre.tsx";
 import ListaCategoria from "./components/categoria/listacategoria/ListaCategotria.tsx";
 import DeletarCategoria from "./components/categoria/deletarcategoria/DeletarCategoria.tsx";
 import FormCategoria from "./components/categoria/formcategoria/FormCategoria.tsx";
+import { AtualizaCursosProvider } from "./contexts/AtualizaCursosContext.tsx";
+
+
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          {/* O container principal da aplicação, que será flex-col para empilhar os elementos */}
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            {/* Este div será o conteúdo principal, que crescerá para preencher o espaço disponível */}
-            <div className="flex flex-grow">
-              {" "}
-              {/* flex-grow aqui para que este container ocupe o máximo de altura */}
-              <Sidebar />
-              {/* O conteúdo das rotas, que também crescerá horizontalmente */}
-              <div className="flex-grow bg-[#1A5566]">
-                <Routes>
-                  <Route path="/" element={<Login />} />
-                  <Route path="/cadastro" element={<Cadastro />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/perfil" element={<Perfil />} />
-                  <Route path="/cursos" element={<ListaCursos />} />
-                  <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
-                  <Route path="/cadastrarcurso" element={<FormCurso />} />
-                  <Route path="/editarcurso/:id" element={<FormCurso />} />
-                  <Route path="/categoria" element={<ListaCategoria />} />
+      <AtualizaCursosProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <div className="flex flex-grow">
+                <Sidebar />
+                <div className="flex-grow bg-white">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/cadastro" element={<Cadastro />} />
+                    <Route path="/cursos" element={<ListaCursos />} />
+                    <Route path="/deletarcurso/:id" element={<DeletarCurso />} />
+                    <Route path="/cadastrarcurso" element={<FormCurso />} />
+                    <Route path="/editarcurso/:id" element={<FormCurso />} />
+                                      <Route path="/categoria" element={<ListaCategoria />} />
                   <Route
                     path="/deletarcategoria/:id"
                     element={<DeletarCategoria />}
@@ -54,14 +52,13 @@ function App() {
                     path="/editarcategoria/:id"
                     element={<FormCategoria />}
                   />
-                </Routes>
-              </div>
+                  </Routes>
+                </div>
+              <Footer />
             </div>
-            <Footer />{" "}
-            {/* O Footer agora está fora do flex-grow do conteúdo principal */}
-          </div>
-        </BrowserRouter>
-      </AuthProvider>
+          </BrowserRouter>
+        </AuthProvider>
+      </AtualizaCursosProvider>
     </>
   );
 }

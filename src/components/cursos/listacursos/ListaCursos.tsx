@@ -5,6 +5,7 @@ import CardCursos from '../cardcursos/CardCursos';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { ToastAlerta } from '../../../utils/ToastAlert';
+import { useAtualizaCursos } from '../../../contexts/AtualizaCursosContext';
 
 function ListaCursos() {
     const navigate = useNavigate();
@@ -16,6 +17,12 @@ function ListaCursos() {
     const { usuario, handleLogout } = useContext(AuthContext);
     const token = usuario.token;
 
+    const { atualizar } = useAtualizaCursos();
+
+    useEffect(() => {
+        buscarCursos();
+    }, [atualizar]);
+    
     async function buscarCursos() {
         try {
             setLoading(true);
@@ -42,10 +49,6 @@ function ListaCursos() {
             navigate('/');
         }
     }, [token])
-
-    useEffect(() => {
-        buscarCursos();
-    }, []);
 
     // Loading skeleton component
     const LoadingSkeleton = () => (

@@ -6,7 +6,6 @@ import type Categorias from '../../../models/Categorias';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { ToastAlerta } from '../../../utils/ToastAlert';
 import { RotatingLines } from 'react-loader-spinner';
-import type { Usuario } from '../../../models/Usuario';
 
 interface FormCursoProps {
     onSuccess?: () => void;
@@ -168,7 +167,6 @@ function FormCurso({ onSuccess }: FormCursoProps) {
             <h1 className="text-4xl text-center my-8">
                 {id !== undefined ? 'Editar Curso' : 'Cadastrar Curso'}
             </h1>
-
             <form className="flex flex-col w-1/2 gap-4" onSubmit={gerarNovoCurso}>
                 <div className="flex flex-col gap-2">
                     <label htmlFor="titulo">Título do Curso</label>
@@ -240,7 +238,7 @@ function FormCurso({ onSuccess }: FormCursoProps) {
                 </div>
                 <button
                     type='submit'
-                    className='rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800 text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
+                    className='cursor-pointer rounded disabled:bg-slate-200 bg-cyan-600 hover:bg-cyan-900 text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
                     disabled={carregandoCategoria || isLoading}
                 >
                     {isLoading ?
@@ -255,6 +253,15 @@ function FormCurso({ onSuccess }: FormCursoProps) {
                     }
                 </button>
             </form>
+            {id !== undefined && (
+                <button
+                    type="button"
+                    onClick={() => navigate('/cursos')}
+                    className="cursor-pointer mb-4 px-8 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded font-semibold transition-colors"
+                >
+                    Voltar
+                </button>
+            )}
         </div>
     );
 }

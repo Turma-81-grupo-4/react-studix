@@ -11,7 +11,12 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login.tsx";
 import Cadastro from "./pages/cadastro/Cadastro.tsx";
 import { AuthProvider } from "./contexts/AuthContext";
+
 import Sidebar from "./components/sidebar/Sidebar.tsx";
+
+
+import Sobre from "./pages/sobre/Sobre.tsx";
+import ListaCategoria from "./components/categoria/listacategoria/ListaCategotria.tsx";
 
 
 function App() {
@@ -19,6 +24,7 @@ function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
+
           {/* O container principal da aplicação, que será flex-col para empilhar os elementos */}
           <div className="flex flex-col min-h-screen">
             <Navbar />
@@ -41,6 +47,7 @@ function App() {
               </div>
             </div>
             <Footer /> {/* O Footer agora está fora do flex-grow do conteúdo principal */}
+
           </div>
         </BrowserRouter>
       </AuthProvider>
